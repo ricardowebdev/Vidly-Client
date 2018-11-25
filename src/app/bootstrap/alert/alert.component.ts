@@ -2,7 +2,9 @@ import { Component,
 		 OnInit, 
 		 ViewChild, 
 		 ElementRef,
-		 Input } from '@angular/core';
+		 Input,
+		 Output,
+		 EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-alert',
@@ -13,6 +15,7 @@ export class AlertComponent implements OnInit {
 	@ViewChild('alert') alert: ElementRef;
 	@Input() message: String;
 	@Input() type: String;
+	@Output() close = new EventEmitter();
 
     constructor() { }
 
@@ -20,10 +23,7 @@ export class AlertComponent implements OnInit {
     }
 
 	closeAlert() {
-	    this.alert.nativeElement.classList.remove('show');
+	    this.close.emit();
 	}
 
-	setAlert() {
-		this.alert.nativeElement.classList.add('show');
-	}    
 }

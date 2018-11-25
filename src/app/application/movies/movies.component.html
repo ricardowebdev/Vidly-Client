@@ -1,50 +1,120 @@
-<div class="row">
-	<div class="col-md-1"></div>
+<app-alert [message]="base.alertMsg"
+           [type]="base.alertType"
+           (close)="base.closeAlert($event)"></app-alert>
 
-	<div class="col text-center">
-		<h1 class="text-center">Cadastro de Filmes</h1>
-	</div>
 
-	<div class="col-md-2 has-text-right">
-		<button class="btn btn-primary btn-sm">
-			<i class="fa fa-plus"></i> Adicionar
-		</button>
+<section *ngIf="page == 'list'">
+	<div class="row">
+		<div class="col-md-1"></div>
+
+		<div class="col text-center">
+			<h1 class="text-center">Cadastro de Filmes</h1>
+		</div>
+
+		<div class="col-md-2 text-right">
+			<button class="btn btn-primary btn-sm" (click)="changePage('single')">
+				<i class="fa fa-plus"></i> Adicionar
+			</button>
+		</div>	
+
+		<div class="col-md-1"></div>
+	</div><br>
+
+	<div *ngFor="let movie of movies">
+		<div class="row justify-content-center">	
+			<div class="col-md-10">
+				<mdb-card>
+				    <mdb-card-body>
+					    <mdb-card-title>
+					        <h5>{{ movie.title }}</h5>
+					    </mdb-card-title>
+				        <mdb-card-text>
+				        	<div class="row">
+				        		<div class="col-md-3">
+						        	<b>Genero: </b> {{ movie.genre.name }}	        			
+				        		</div>
+				        		<div class="col-md-3">
+									<b>Quantidade em Estoque: </b> {{ movie.numberInStock }}		        			
+				        		</div>
+				        		<div class="col-md-2">
+									<b>Diaria: </b> {{ movie.dailyRentalRate | currency:'BRL' }}		        			
+				        		</div>
+								<div class="col-md-4">
+							    	<a class="btn btn-yellow btn-sm card-link" (click)="changePage('single'); selectMovie(movie)">
+							    		<i class="fa fa-edit"></i> Editar
+							    	</a>
+							    	<a class="btn btn-danger btn-sm card-link" (click)="callDelete(movie)">
+							    		<i class="fa fa-trash"></i> Deletar
+							    	</a>							
+								</div>		        		
+				        	</div>
+				    	</mdb-card-text>
+				  	</mdb-card-body>
+				</mdb-card>
+			</div>
+		</div><br>	
 	</div>	
+</section>
 
-	<div class="col-md-1"></div>
-</div><br>
+<section *ngIf="page == 'single'">
+	<div class="row">
+		<div class="col text-center">
+			<h1 class="text-center">Filmes</h1>
+		</div>
+	</div><br>
 
-<div *ngFor="let movie of movies">
 	<div class="row justify-content-center">	
 		<div class="col-md-10">
 			<mdb-card>
 			    <mdb-card-body>
-				    <mdb-card-title>
-				        <h5>{{ movie.title }}</h5>
-				    </mdb-card-title>
-			        <mdb-card-text>
-			        	<div class="row">
-			        		<div class="col-md-3">
-					        	<b>Genero: </b> {{ movie.genre.name }}	        			
-			        		</div>
-			        		<div class="col-md-3">
-								<b>Quantidade em Estoque: </b> {{ movie.numberInStock }}		        			
-			        		</div>
-			        		<div class="col-md-2">
-								<b>Diaria: </b> {{ movie.dailyRentalRate | currency:'BRL' }}		        			
-			        		</div>
+					<form>
+						<input type="hidden" id="id" />
+						<div class="row">
 							<div class="col-md-4">
-						    	<a class="btn btn-yellow btn-sm card-link" (click)="changePage(movie)">
-						    		<i class="fa fa-edit"></i> Editar
+								<div class="md-form">
+								    <input mdbInputDirective type="text" id="title" class="form-control">
+								    <label for="title">Titulo</label>
+								</div>
+							</div>
+
+						    <div class="col-md-4">
+								<label for="genrer">Gênero</label>
+								<select id="genrer" class="form-control">
+									<option value="">Selecione</option>
+								</select>
+						  	</div>
+						</div><br>
+
+						<div class="row">
+							<div class="col-md-4">
+								<div class="md-form">
+								    <input mdbInputDirective type="number" id="numberInStock" class="form-control" />
+								    <label for="numberInStock">Qtde</label>								
+								</div>
+							</div>
+
+							<div class="col-md-4">
+								<div class="md-form">
+								    <input mdbInputDirective type="number" id="dailyRentalRate" class="form-control" />
+								    <label for="dailyRentalRate">Diaria</label>								
+								</div>
+							</div>
+						</div>
+
+				    	<div class="row justify-content-right">
+				    		<div class="col-md-12 text-right">
+						    	<a class="btn btn-danger btn-sm" (click)="changePage('list')">
+						    		<i class="fa fa-arrow-left"></i> Voltar
+						    	</a>			    			
+
+						    	<a class="btn btn-success btn-sm" (click)="confirmForm()">
+						    		<i class="fa fa-check"></i> Confirmar
 						    	</a>
-						    	<a class="btn btn-danger btn-sm card-link" (click)="callDelete(movie)">
-						    		<i class="fa fa-trash"></i> Deletar
-						    	</a>							
-							</div>		        		
-			        	</div>
-			    	</mdb-card-text>
-			  	</mdb-card-body>
+				    		</div>			    		
+				    	</div>						
+					</form>
+			    </mdb-card-body>
 			</mdb-card>
 		</div>
-	</div><br>	
-</div>
+	</div>
+</section>

@@ -3,7 +3,8 @@ import { BrowserModule              } from '@angular/platform-browser';
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule    } from '@angular/platform-browser/animations';
 import { HttpModule                 } from '@angular/http';
-import { FormsModule                } from '@angular/forms';
+import { FormsModule,
+         ReactiveFormsModule        } from '@angular/forms';
 
 // Terceiros
 import { MDBBootstrapModule         } from 'angular-bootstrap-md';
@@ -25,6 +26,7 @@ import { MoviesComponent            } from './application/movies/movies.componen
     MDBBootstrapModule.forRoot(),
     FormsModule,
     HttpModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
