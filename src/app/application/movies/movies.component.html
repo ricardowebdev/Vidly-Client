@@ -43,7 +43,8 @@
 							    	<a class="btn btn-yellow btn-sm card-link" (click)="changePage('single'); selectMovie(movie)">
 							    		<i class="fa fa-edit"></i> Editar
 							    	</a>
-							    	<a class="btn btn-danger btn-sm card-link" (click)="callDelete(movie)">
+							    	<a class="btn btn-danger btn-sm card-link" 
+							    	   (click)=" callDelete(movie); basicModal.show()">
 							    		<i class="fa fa-trash"></i> Deletar
 							    	</a>							
 								</div>		        		
@@ -67,20 +68,27 @@
 		<div class="col-md-10">
 			<mdb-card>
 			    <mdb-card-body>
-					<form>
-						<input type="hidden" id="id" />
+					<form [formGroup]="form">
+						<input type="hidden" id="id" [formControl]="id" />
 						<div class="row">
 							<div class="col-md-4">
 								<div class="md-form">
-								    <input mdbInputDirective type="text" id="title" class="form-control">
+								    <input mdbInputDirective 
+								    	   type="text" 
+								    	   id="title" 
+								    	   class="form-control" 
+								    	   [formControl]="title" />
 								    <label for="title">Titulo</label>
 								</div>
 							</div>
 
 						    <div class="col-md-4">
 								<label for="genrer">Gênero</label>
-								<select id="genrer" class="form-control">
+								<select id="genrer" 
+										class="form-control" 
+										[formControl]="genrerId">
 									<option value="">Selecione</option>
+									<option *ngFor="let genre of genres" value="{{ genre._id}}">{{ genre.name }}</option>
 								</select>
 						  	</div>
 						</div><br>
@@ -88,14 +96,22 @@
 						<div class="row">
 							<div class="col-md-4">
 								<div class="md-form">
-								    <input mdbInputDirective type="number" id="numberInStock" class="form-control" />
+								    <input mdbInputDirective 
+								    	   type="number" 
+								    	   id="numberInStock" 
+								    	   class="form-control" 
+								    	   [formControl]="numberInStock" />
 								    <label for="numberInStock">Qtde</label>								
 								</div>
 							</div>
 
 							<div class="col-md-4">
 								<div class="md-form">
-								    <input mdbInputDirective type="number" id="dailyRentalRate" class="form-control" />
+								    <input mdbInputDirective 
+								    	   type="number" 
+								    	   id="dailyRentalRate" 
+								    	   class="form-control" 
+								    	   [formControl]="dailyRentalRate" />
 								    <label for="dailyRentalRate">Diaria</label>								
 								</div>
 							</div>
@@ -118,3 +134,39 @@
 		</div>
 	</div>
 </section>
+
+
+<div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    	<div class="modal-content">
+      		<div class="modal-header">
+        		<button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+          			<span aria-hidden="true">×</span>
+        		</button>
+        		<h4 class="modal-title w-100" id="myModalLabel">Exclusão de filmes</h4>
+      		</div>
+      		<div class="modal-body">
+        		Tem certeza de que deseja excluir este filme?
+      		</div>
+      		<div class="modal-footer">
+        		<button type="button" 
+        				mdbBtn 
+        				color="danger"
+        				class="waves-light btn-sm"
+        				aria-label="Close"
+        				(click)="basicModal.hide()"
+        				mdbWavesEffect>
+        			<i class="fa fa-remove"></i> Fechar
+        		</button>
+        		<button type="button" 
+        				mdbBtn 
+        				color="success" 
+        				class="relative waves-light btn-sm" 
+        				mdbWavesEffect
+        				(click)="confirmDelete(); basicModal.hide()">
+        			<i class="fa fa-check"></i> Confirmar
+        		</button>
+      		</div>
+    	</div>
+  	</div>
+</div>

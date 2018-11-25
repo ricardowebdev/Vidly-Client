@@ -1,5 +1,6 @@
 import { Component, OnInit   } from '@angular/core';
 import { MoviesService       } from './movies.service';  
+import { GenresService       } from '../genres/genres.service';  
 import { StatusHandler       } from '../../common/statusHandler';  
 import { Base                } from '../../common/base';  
 import { FormControl, 
@@ -12,8 +13,10 @@ import { FormControl,
   styleUrls: ['./movies.component.scss']
 })
 export class MoviesComponent implements OnInit {
-	movies: any;
-	page:   string;
+	movies:        any;
+	genres:        any;
+	selectedMovie: any;
+	page:          string;
 	base = new Base();
 
 	form = new FormGroup({
@@ -38,9 +41,6 @@ export class MoviesComponent implements OnInit {
 		genrerId: new FormControl('', [
 			Validators.required			
 		]),		
-
-		genrerName: new FormControl('', []),		
-
 	});
 
 	get id() {
@@ -60,19 +60,26 @@ export class MoviesComponent implements OnInit {
 	}
 
 	get genrerId() {
-		return this.form.get('genrer');
+		return this.form.get('genrerId');
 	}
 
-	get genrerName() {
-		return this.form.get('genrerName');
-	}
-
-    constructor(private service: MoviesService) { }
+    constructor(private service: MoviesService,
+    	        private genresService: GenresService) {
+    }
 
     ngOnInit() {
     	this.page   = 'list';
     	this.movies = [];
-  		this.getMovies();  	
+  		this.getGenres();
+  		this.getMovies();
+  	}
+
+  	getGenres() {
+  		this.genresService.getAllGenres().subscribe(response => {
+  			this.genres = response.json();
+  		}, error => {
+			this.base.setAlert(StatusHandler.errorHandler(error), 'danger');  			
+  		})
   	}
 
     getMovies() {
@@ -90,17 +97,15 @@ export class MoviesComponent implements OnInit {
 
 	confirmForm() {
 		let params = {
-			id:              this.id.value,
 			title: 			 this.title.value,
 			numberInStock:   this.numberInStock.value,
 			dailyRentalRate: this.dailyRentalRate.value,
-			genrer: {
-				_id:  this.genrerId.value,
-				name: this.genrerName.value,
+			genre: {
+				id:  this.genrerId.value
 			}          
 		}
-		
-		if(this.id.value !== undefined || this.id.value > 0) {
+
+		if(this.id.value == undefined || this.id.value == 0) {
 			this.service.saveMovie(params).subscribe(response => {
 				this.getMovies();
 				this.base.setAlert("Filme inserido com sucesso", "success");
@@ -119,4 +124,27 @@ export class MoviesComponent implements OnInit {
 		}
 	}
 
+	selectMovie(movie) {
+		this.id.setValue(movie._id);
+		this.title.setValue(movie.title);
+		this.numberInStock.setValue(movie.numberInStock);
+		this.dailyRentalRate.setValue(movie.dailyRentalRate);
+		this.genrerId.setValue(movie.genre._id);
+	}
+
+	callDelete(movie) {
+		this.selectedMovie = movie;
+	}
+
+	confirmDelete() {
+		this.service.removeMovie(this.selectedMovie._id).subscribe(response => {
+			console.log(response.json());
+			this.getMovies();
+			this.base.setAlert("Filme removido com sucesso", "success");
+			this.changePage('list');
+		}, error => {
+			console.log(error);
+			this.base.setAlert(StatusHandler.errorHandler(error), 'danger');
+		});
+	}
 }

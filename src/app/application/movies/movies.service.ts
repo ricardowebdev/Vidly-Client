@@ -16,10 +16,14 @@ export class MoviesService {
     }
 
     saveMovie(params) {
-    	return this.http.post(Environment.getUrl() + "movies", JSON.parse(params));	
+    	return this.http.post(Environment.getUrl() + "movies", params);	
     }
 
     editMovie(params, id) {
-    	return this.http.put(Environment.getUrl() + "movies/" + id, JSON.parse(params));
+    	return this.http.put(Environment.getUrl() + "movies/" + id, params);
+    }
+
+    removeMovie(id) {
+        return this.http.delete(Environment.getUrl() + "movies/" + id);        
     }
 }

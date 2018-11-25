@@ -13,12 +13,14 @@ import { MDBBootstrapModule         } from 'angular-bootstrap-md';
 import { AppComponent               } from './app.component';
 import { AlertComponent             } from './bootstrap/alert/alert.component';
 import { MoviesComponent            } from './application/movies/movies.component';
+import { GenresComponent } from './application/genres/genres.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AlertComponent,
-    MoviesComponent
+    MoviesComponent,
+    GenresComponent
   ],
   imports: [
     BrowserModule,
