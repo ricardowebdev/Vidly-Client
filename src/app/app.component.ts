@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'app';
+  title         = 'app';
+  activeMovie   = true;
+  activeClient  = false;
+  activeGenre   = false;
+  activeRentals = false;
 }

@@ -138,12 +138,10 @@ export class MoviesComponent implements OnInit {
 
 	confirmDelete() {
 		this.service.removeMovie(this.selectedMovie._id).subscribe(response => {
-			console.log(response.json());
 			this.getMovies();
 			this.base.setAlert("Filme removido com sucesso", "success");
 			this.changePage('list');
 		}, error => {
-			console.log(error);
 			this.base.setAlert(StatusHandler.errorHandler(error), 'danger');
 		});
 	}
