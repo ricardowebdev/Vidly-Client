@@ -1,1 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
+$magin:      0;
+$padding:    0;
+$background: #eeeeee;
+$danger:     #ff0000;
+
+body {
+    margin:  $magin;
+    padding: $padding;
+    background-color: $background;
+}
+
+.full {
+    width:   100%;
+    margin:  $magin;
+    padding: $padding;
+}
+
+.star-required {
+    color: $danger;
+}
+
+.validation-msg {
+    color: $danger;
+}

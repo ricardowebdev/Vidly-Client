@@ -1,32 +1,47 @@
-<div class="container-fluid">
-  	<div class="row">
-    	<div class="col-12">
-			<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo scrolling-navbar text-left">
-			    <mdb-navbar-brand><a class="navbar-brand" href="#">Vidly - Locadora</a></mdb-navbar-brand>
-			    <links>
-			        <ul class="navbar-nav mr-auto">
-			            <li class="nav-item {{ activeMovie }}" >
-			                <a class="nav-link waves-light" mdbWavesEffect>Filmes</a>
-			            </li>
-			            
-			            <li class="nav-item {{ activeClient }}">
-			                <a class="nav-link waves-light" mdbWavesEffect>Clientes</a>
-			            </li>
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo scrolling-navbar text-left">
+	<mdb-navbar-brand><a class="navbar-brand" href="#">Vidly - Locadora</a></mdb-navbar-brand>
+	<links>
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item"
+				[routerLinkActive]="'active'">
+				<a class="nav-link waves-light" 
+				   [routerLink]="['/movies']" 
+				   mdbWavesEffect>
+				   Filmes
+				</a>
+			</li>
+			
+			<li class="nav-item"
+				[routerLinkActive]="'active'">
+				<a class="nav-link waves-light"
+				   [routerLink]="['/clients']"
+				   mdbWavesEffect>
+				   Clientes
+				</a>
+			</li>
 
-			            <li class="nav-item {{ activeGenre }}">
-			                <a class="nav-link waves-light" mdbWavesEffect>Generos</a>
-			            </li>
+			<li class="nav-item" 
+			    [routerLinkActive]="'active'">
+				<a class="nav-link waves-light"
+				   [routerLink]="['/genres']"
+				   mdbWavesEffect>
+				   Generos
+				</a>
+			</li>
 
-			            <li class="nav-item {{ activeRentals }}">
-			                <a class="nav-link waves-light" mdbWavesEffect>Alugueis</a>
-			            </li>
-			        </ul>
-			        <span class="navbar-text white-text text-right">
-			            Sair
-			        </span>        
-			    </links>
-			</mdb-navbar>    		
-    	</div>
-  	</div>
-  	<app-movies></app-movies>
-</div>
+			<li class="nav-item"
+			    [routerLinkActive]="'active'">
+				<a class="nav-link waves-light"
+				   [routerLink]="['/rentals']"
+				   mdbWavesEffect>
+				   Alugueis
+				</a>
+			</li>
+		</ul>
+		<span class="navbar-text white-text text-right">
+			Sair
+		</span>        
+	</links>
+</mdb-navbar>    		
+<router-outlet></router-outlet>	  
+

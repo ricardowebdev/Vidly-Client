@@ -1,0 +1,88 @@
+<app-alert [message]="base.alertMsg"
+           [type]="base.alertType"
+           (close)="base.closeAlert()"></app-alert>
+
+<div class="container-fluid">
+	<div class="row justify-content-md-center loginCard">
+		<h1 class="text-center"><b>Vidly Locadora</b></h1>
+	</div><br>
+
+	<div class="row justify-content-md-center">
+		<div class="col-md-6">
+			<mdb-card>			
+			    <mdb-card-body>
+				    <mdb-card-title>
+				        <h4 class="text-center"><b>Login</b></h4>
+				    </mdb-card-title>
+
+			        <mdb-card-text>
+			        	<form [formGroup]="form">
+				        	<div class="row justify-content-md-center">
+				        		<div class="col-md-10">
+						        	<div class="md-form">
+						        		<input type="text" 
+						        			   id="email" 
+						        			   class="form-control"
+						        			   [formControl]="email"
+						        			   (keyup)="clearAlert()"
+						        			   mdbInputDirective />
+						        		<label for="email">E-mail <span class="star-required">*</span></label>
+									</div>
+									<div *ngIf="email.invalid && email.touched">
+										<div class="alert alert-danger">
+											<div *ngIf="email.errors.required">
+												Este campo é obrigatório
+											</div>
+											<div *ngIf="email.errors.minlength">
+												Este campo deve ter no minimo 5 caracteres
+											</div>
+											<div *ngIf="email.errors.email">
+												E-mail inválido
+											</div>										
+										</div>
+									</div>									
+		                        </div>                        
+				        	</div><br>
+
+				        	<div class="row justify-content-md-center">
+				        		<div class="col-md-10">
+						        	<div class="md-form">
+						        		<input type="password" 
+						        		       class="form-control"
+						        		       id="password"
+						        		       [formControl]="password"
+						        		       (keyup)="clearAlert()"
+						        		       mdbInputDirective />
+						        		<label for="password">Senha <span class="star-required">*</span></label>
+									</div>
+									<div *ngIf="password.invalid && password.touched">
+										<div class="alert alert-danger">
+											<div *ngIf="password.errors.required">
+												Este campo é obrigatório
+											</div>
+											<div *ngIf="password.errors.minlength">
+												Este campo deve ter no minimo 5 caracteres
+											</div>										
+										</div>
+									</div>									
+		                        </div>                        
+				        	</div><br>
+
+				        	<div class="row justify-content-md-center">
+				        		<div class="col-md-10">
+				        			<button mdbBtn 
+				        					mdbWavesEffect
+				        					class="btn btn-primary form-control"
+				        					(click)="login()"
+				        					[disabled]="form.invalid">
+				        				<i class="fa fa-sign-in"></i> Entrar
+				        			</button>
+				        		</div>
+				        	</div><br>
+			        	</form>
+			    	</mdb-card-text>
+			  	</mdb-card-body>
+			</mdb-card>
+		</div>
+	</div>
+</div>
