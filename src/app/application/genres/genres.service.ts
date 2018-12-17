@@ -12,4 +12,17 @@ export class GenresService {
     getAllGenres() {
         return this.http.get(environment.baseUrl + 'genres');
     }
+
+    saveGenre(params) {
+        return this.http.post(environment.baseUrl + 'genres', params);
+    }
+
+    editGenre(params, id) {
+        return this.http.put(environment.baseUrl + 'genres/' + id, params);
+    }
+
+    removeGenre(id) {
+        return this.http.delete(environment.baseUrl + 'genres/' + id);
+    }
+
 }

@@ -53,13 +53,18 @@
 									<b>Diaria: </b> {{ movie.dailyRentalRate | currency:'BRL' }}		        			
 				        		</div>
 								<div class="col-md-4">
-							    	<a class="btn btn-yellow btn-sm card-link" (click)="changePage('single'); selectMovie(movie)">
+									<button class="btn btn-yellow btn-sm card-link" 
+											(click)="changePage('single'); selectMovie(movie)"
+											mdbBtn 
+                                            mdbWavesEffect>
 							    		<i class="fa fa-edit"></i> Editar
-							    	</a>
-							    	<a class="btn btn-danger btn-sm card-link" 
-							    	   (click)=" callDelete(movie); basicModal.show()">
+									</button>
+							    	<button class="btn btn-danger btn-sm card-link" 
+											(click)=" callDelete(movie); basicModal.show()"
+											mdbBtn 
+                                            mdbWavesEffect>
 							    		<i class="fa fa-trash"></i> Deletar
-							    	</a>							
+									</button>							
 								</div>		        		
 				        	</div>
 				    	</mdb-card-text>
