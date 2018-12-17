@@ -41,9 +41,7 @@ export class GenresComponent implements OnInit {
             Validators.maxLength(50)
         ]),
 
-        active: new FormControl('', [
-            Validators.required
-        ])
+        active: new FormControl('', [])
     });
 
     get id() {
@@ -93,8 +91,14 @@ export class GenresComponent implements OnInit {
     }
 
     confirmForm() {
+        const genre = {
+            _id:    this.id.value,
+            name:   this.name.value,
+            active: this.active.value === 'true' ? true : false
+        };
+
         if (this.id.value === null || this.id.value === 0) {
-            this.service.saveGenre(this.form.value).subscribe(response => {
+            this.service.saveGenre(genre).subscribe(response => {
                 this.getGenres();
                 this.base.setAlert('Gênero inserido com sucesso', 'success');
                 this.changePage('list');
@@ -102,7 +106,7 @@ export class GenresComponent implements OnInit {
                 this.base.setAlert(StatusHandler.errorHandler(error), 'danger');
             });
         } else {
-            this.service.editGenre(this.form.value, this.id.value).subscribe(response => {
+            this.service.editGenre(genre, this.id.value).subscribe(response => {
                 this.getGenres();
                 this.base.setAlert('Gênero alterado com sucesso', 'success');
                 this.changePage('list');

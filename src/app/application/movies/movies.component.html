@@ -3,197 +3,202 @@
            (close)="base.closeAlert()"></app-alert><br>
 
 <section *ngIf="page == 'list'">
-	<div class="row justify-content-center">
-		<div class="col-md-12">
-			<h1 class="text-center">Cadastro de Filmes</h1>
-		</div>
-	</div><br>
-
-    <div class="row justify-content-md-center">
-        <div class="col-md-5 text-right">            
-            <div class="md-form">
-                <input mdbInputDirective
-                       type="text"
-                       class="form-control"
-                       #filter
-                       id="filter"
-                       name="filter"
-                       (keyup)="findMovie(filter.value)" />
-                <label for="filter"><i class="fa fa-search"></i> Buscar por nome</label>
-            </div>
-		</div>
-
-		<div class="col-md-5 text-right">
-			<br>
-			<button class="btn btn-primary btn-sm" 
-					(click)="changePage('single')"
-					mdbBtn
-					mdbWavesEffect>
-				<i class="fa fa-plus"></i> Adicionar
-			</button>
-		</div>				
-    </div>	
-	<div *ngFor="let movie of filteredMovies" @fade>
-		<div class="row justify-content-center">	
-			<div class="col-md-10">
-				<mdb-card>
-				    <mdb-card-body>
-					    <mdb-card-title>
-					        <h5>{{ movie.title }}</h5>
-					    </mdb-card-title>
-				        <mdb-card-text>
-				        	<div class="row">
-				        		<div class="col-md-3">
-						        	<b>Genero: </b> {{ movie.genre.name }}	        			
-				        		</div>
-				        		<div class="col-md-3">
-									<b>Quantidade em Estoque: </b> {{ movie.numberInStock }}		        			
-				        		</div>
-				        		<div class="col-md-2">
-									<b>Diaria: </b> {{ movie.dailyRentalRate | currency:'BRL' }}		        			
-				        		</div>
-								<div class="col-md-4">
-									<button class="btn btn-yellow btn-sm card-link" 
-											(click)="changePage('single'); selectMovie(movie)"
-											mdbBtn 
-                                            mdbWavesEffect>
-							    		<i class="fa fa-edit"></i> Editar
-									</button>
-							    	<button class="btn btn-danger btn-sm card-link" 
-											(click)=" callDelete(movie); basicModal.show()"
-											mdbBtn 
-                                            mdbWavesEffect>
-							    		<i class="fa fa-trash"></i> Deletar
-									</button>							
-								</div>		        		
-				        	</div>
-				    	</mdb-card-text>
-				  	</mdb-card-body>
-				</mdb-card>
+	<div class="container-fluid">
+		<div class="row justify-content-center">
+			<div class="col-md-12">
+				<h1 class="text-center">Cadastro de Filmes</h1>
 			</div>
-		</div><br>	
+		</div><br>
+	
+		<div class="row justify-content-md-center">
+			<div class="col-md-5 text-right">            
+				<div class="md-form">
+					<input mdbInputDirective
+							type="text"
+							class="form-control"
+							#filter
+							id="filter"
+							name="filter"
+							(keyup)="findMovie(filter.value)" />
+					<label for="filter"><i class="fa fa-search"></i> Buscar por nome</label>
+				</div>
+			</div>
+	
+			<div class="col-md-5 text-right">
+				<br>
+				<button class="btn btn-primary btn-sm" 
+						(click)="changePage('single')"
+						mdbBtn
+						mdbWavesEffect>
+					<i class="fa fa-plus"></i> Adicionar
+				</button>
+			</div>				
+		</div>
+			
+		<div *ngFor="let movie of filteredMovies" @fade>
+			<div class="row justify-content-center">	
+				<div class="col-md-10">
+					<mdb-card>
+						<mdb-card-body>
+							<mdb-card-title>
+								<h5>{{ movie.title }}</h5>
+							</mdb-card-title>
+							<mdb-card-text>
+								<div class="row">
+									<div class="col-md-3">
+										<b>Genero: </b> {{ movie.genre.name }}	        			
+									</div>
+									<div class="col-md-3">
+										<b>Quantidade em Estoque: </b> {{ movie.numberInStock }}		        			
+									</div>
+									<div class="col-md-2">
+										<b>Diaria: </b> {{ movie.dailyRentalRate | currency:'BRL' }}		        			
+									</div>
+									<div class="col-md-4">
+										<button class="btn btn-yellow btn-sm card-link" 
+												(click)="changePage('single'); selectMovie(movie)"
+												mdbBtn 
+												mdbWavesEffect>
+											<i class="fa fa-edit"></i> Editar
+										</button>
+										<button class="btn btn-danger btn-sm card-link" 
+												(click)=" callDelete(movie); basicModal.show()"
+												mdbBtn 
+												mdbWavesEffect>
+											<i class="fa fa-trash"></i> Deletar
+										</button>							
+									</div>		        		
+								</div>
+							</mdb-card-text>
+							</mdb-card-body>
+					</mdb-card>
+				</div>
+			</div><br>	
+		</div>
 	</div>	
 </section>
 
 <section *ngIf="page == 'single'">
-	<div class="row justify-content-center">
-		<div class="col-md-10 text-center">
-			<h1 class="text-center">Filmes</h1>
-		</div>
-	</div><br>
-
-	<div class="row justify-content-center">	
-		<div class="col-md-10">
-			<mdb-card>
-			    <mdb-card-body>
-					<form [formGroup]="form">
-						<input type="hidden" id="id" [formControl]="id" />
-						<div class="row">
-							<div class="col-md-4">
-								<div class="md-form">
-								    <input mdbInputDirective 
-								    	   type="text" 
-								    	   id="title" 
-										   class="form-control" 
-										   [class.invalid]="title.invalid && title.touched"
-										   [mdbValidate]="false"
-								    	   [formControl]="title" />
-								    <label for="title">Titulo</label>
-								</div>
-                                <div *ngIf="title.invalid && title.touched">
-                                    <div class="validation-msg">
-                                        <div *ngIf="title.errors.required">
-                                            Este campo é obrigatório
+	<div class="container-fluid">
+		<div class="row justify-content-center">
+			<div class="col-md-10 text-center">
+				<h1 class="text-center">Filmes</h1>
+			</div>
+		</div><br>
+	
+		<div class="row justify-content-center">	
+			<div class="col-md-10">
+				<mdb-card>
+					<mdb-card-body>
+						<form [formGroup]="form">
+							<input type="hidden" id="id" [formControl]="id" />
+							<div class="row">
+								<div class="col-md-4">
+									<div class="md-form">
+										<input mdbInputDirective 
+												type="text" 
+												id="title" 
+												class="form-control" 
+												[class.invalid]="title.invalid && title.touched"
+												[mdbValidate]="false"
+												[formControl]="title" />
+										<label for="title">Titulo</label>
+									</div>
+									<div *ngIf="title.invalid && title.touched">
+										<div class="validation-msg">
+											<div *ngIf="title.errors.required">
+												Este campo é obrigatório
+											</div>
+											<div *ngIf="title.errors.minlength">
+												Este campo deve ter no minimo 3 caracteres
+											</div>										
 										</div>
-                                        <div *ngIf="title.errors.minlength">
-                                            Este campo deve ter no minimo 3 caracteres
-                                        </div>										
-                                    </div>
-                                </div>								
-							</div>
-
-						    <div class="col-md-4">
-								<label for="genrer">Gênero</label>
-								<select id="genrer" 
-										class="form-control" 
-										[class.invalid]="genrerId.invalid && genrerId.touched"
-										[formControl]="genrerId">
-									<option value="">Selecione</option>
-									<option *ngFor="let genre of genres" value="{{ genre._id}}">{{ genre.name }}</option>
-								</select>
-                                <div *ngIf="genrerId.invalid && genrerId.touched">
-                                    <div class="validation-msg">
-                                        <div *ngIf="genrerId.errors.required">
-                                            Este campo é obrigatório
-										</div>										
-                                    </div>
-                                </div>
-						  	</div>
-						</div><br>
-
-						<div class="row">
-							<div class="col-md-4">
-								<div class="md-form">
-								    <input mdbInputDirective 
-								    	   type="number" 
-										   id="numberInStock" 
-										   [mdbValidate]="false"
-										   class="form-control" 
-										   [class.invalid]="numberInStock.invalid && numberInStock.touched"
-								    	   [formControl]="numberInStock" />
-								    <label for="numberInStock">Qtde</label>								
+									</div>								
 								</div>
-                                <div *ngIf="numberInStock.invalid && numberInStock.touched">
-                                    <div class="validation-msg">
-                                        <div *ngIf="numberInStock.errors.required">
-                                            Este campo é obrigatório
+	
+								<div class="col-md-4">
+									<label for="genrer">Gênero</label>
+									<select id="genrer" 
+											class="form-control" 
+											[class.invalid]="genrerId.invalid && genrerId.touched"
+											[formControl]="genrerId">
+										<option value="">Selecione</option>
+										<option *ngFor="let genre of genres" value="{{ genre._id}}">{{ genre.name }}</option>
+									</select>
+									<div *ngIf="genrerId.invalid && genrerId.touched">
+										<div class="validation-msg">
+											<div *ngIf="genrerId.errors.required">
+												Este campo é obrigatório
+											</div>										
 										</div>
-                                    </div>
-                                </div>								
-							</div>
-
-							<div class="col-md-4">
-								<div class="md-form">
-								    <input mdbInputDirective 
-								    	   type="number" 
-								    	   id="dailyRentalRate" 
-										   class="form-control" 
-										   [class.invalid]="dailyRentalRate.invalid && dailyRentalRate.touched"
-										   [mdbValidate]="false"
-								    	   [formControl]="dailyRentalRate" />
-								    <label for="dailyRentalRate">Diaria</label>								
+									</div>
+									</div>
+							</div><br>
+	
+							<div class="row">
+								<div class="col-md-4">
+									<div class="md-form">
+										<input mdbInputDirective 
+												type="number" 
+												id="numberInStock" 
+												[mdbValidate]="false"
+												class="form-control" 
+												[class.invalid]="numberInStock.invalid && numberInStock.touched"
+												[formControl]="numberInStock" />
+										<label for="numberInStock">Qtde</label>								
+									</div>
+									<div *ngIf="numberInStock.invalid && numberInStock.touched">
+										<div class="validation-msg">
+											<div *ngIf="numberInStock.errors.required">
+												Este campo é obrigatório
+											</div>
+										</div>
+									</div>								
 								</div>
-                                <div *ngIf="dailyRentalRate.invalid && dailyRentalRate.touched">
-                                    <div class="validation-msg">
-                                        <div *ngIf="dailyRentalRate.errors.required">
-                                            Este campo é obrigatório
+	
+								<div class="col-md-4">
+									<div class="md-form">
+										<input mdbInputDirective 
+												type="number" 
+												id="dailyRentalRate" 
+												class="form-control" 
+												[class.invalid]="dailyRentalRate.invalid && dailyRentalRate.touched"
+												[mdbValidate]="false"
+												[formControl]="dailyRentalRate" />
+										<label for="dailyRentalRate">Diaria</label>								
+									</div>
+									<div *ngIf="dailyRentalRate.invalid && dailyRentalRate.touched">
+										<div class="validation-msg">
+											<div *ngIf="dailyRentalRate.errors.required">
+												Este campo é obrigatório
+											</div>
 										</div>
-                                    </div>
-                                </div>								
+									</div>								
+								</div>
 							</div>
-						</div>
-
-				    	<div class="row justify-content-right">
-				    		<div class="col-md-12 text-right">
-								<button class="btn btn-danger btn-sm"
-										(click)="changePage('list')"
-										mdbBtn
-										mdbWavesEffect>
-						    		<i class="fa fa-arrow-left"></i> Voltar
-						    	</button>			    			
-
-								<button class="btn btn-success btn-sm" 
-										[disabled]="form.invalid"
-										mdbBtn
-										mdbWavesEffect
-								   		(click)="confirmForm()">
-						    		<i class="fa fa-check"></i> Confirmar
-								</button>
-				    		</div>			    		
-				    	</div>						
-					</form>
-			    </mdb-card-body>
-			</mdb-card>
+	
+							<div class="row justify-content-right">
+								<div class="col-md-12 text-right">
+									<button class="btn btn-danger btn-sm"
+											(click)="changePage('list')"
+											mdbBtn
+											mdbWavesEffect>
+										<i class="fa fa-arrow-left"></i> Voltar
+									</button>			    			
+	
+									<button class="btn btn-success btn-sm" 
+											[disabled]="form.invalid"
+											mdbBtn
+											mdbWavesEffect
+												(click)="confirmForm()">
+										<i class="fa fa-check"></i> Confirmar
+									</button>
+								</div>			    		
+							</div>						
+						</form>
+					</mdb-card-body>
+				</mdb-card>
+			</div>
 		</div>
 	</div>
 </section>
