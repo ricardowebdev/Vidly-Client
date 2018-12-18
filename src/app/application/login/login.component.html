@@ -23,8 +23,7 @@
 						        		<input type="text" 
 						        			   id="email" 
 						        			   class="form-control"
-						        			   [formControl]="email"
-						        			   (keyup)="clearAlert()"
+						        			   [formControl]="email"						        			   
 						        			   mdbInputDirective />
 						        		<label for="email">E-mail <span class="star-required">*</span></label>
 									</div>
@@ -51,7 +50,6 @@
 						        		       class="form-control"
 						        		       id="password"
 						        		       [formControl]="password"
-						        		       (keyup)="clearAlert()"
 						        		       mdbInputDirective />
 						        		<label for="password">Senha <span class="star-required">*</span></label>
 									</div>
@@ -72,9 +70,7 @@
 				        		<div class="col-md-10">
 				        			<button mdbBtn 
 				        					mdbWavesEffect
-				        					class="btn btn-primary form-control"
-				        					(click)="login()"
-				        					[disabled]="form.invalid">
+				        					class="btn btn-primary form-control">
 				        				<i class="fa fa-sign-in"></i> Entrar
 				        			</button>
 				        		</div>

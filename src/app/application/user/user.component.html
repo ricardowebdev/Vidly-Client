@@ -1,3 +1,272 @@
-<p>
-  user works!
-</p>
+<app-alert [message]="base.alertMsg"
+           [type]="base.alertType"
+           (close)="base.closeAlert()"></app-alert><br>
+
+<section *ngIf="page == 'list'">
+	<div class="container-fluid">
+		<div class="row justify-content-center">
+			<div class="col-md-12">
+				<h1 class="text-center">Cadastro de Usuários</h1>
+			</div>
+		</div><br>
+	
+		<div class="row justify-content-md-center">
+			<div class="col-md-5 text-right">            
+				<div class="md-form">
+					<input mdbInputDirective
+							type="text"
+							class="form-control"
+							#filter
+							id="filter"
+							name="filter"
+							(keyup)="findUser(filter.value)" />
+					<label for="filter"><i class="fa fa-search"></i> Buscar por nome</label>
+				</div>
+			</div>
+	
+			<div class="col-md-5 text-right">
+				<br>
+				<button class="btn btn-primary btn-sm" 
+						(click)="changePage('single')"
+						mdbBtn
+						mdbWavesEffect>
+					<i class="fa fa-plus"></i> Adicionar
+				</button>
+			</div>				
+		</div>
+			
+		<div *ngFor="let user of filteredUsers" @fade>
+			<div class="row justify-content-center">	
+				<div class="col-md-10">
+					<mdb-card>
+						<mdb-card-body>
+							<mdb-card-title>
+								<h5>{{ user.name }}</h5>
+							</mdb-card-title>
+							<mdb-card-text>
+								<div class="row">
+                                    <div class="col-md-6">
+                                        <b>E-mail: </b> {{ user.email }}
+                                    </div>
+
+									<div class="col-md-2">
+										<b>Ativo: </b> {{ user.active == true ? 'Ativo' : 'Inativo' }}	        			
+                                    </div>
+                                    
+									<div class="col-md-4 text-right">
+										<button class="btn btn-yellow btn-sm card-link"
+												(click)="changePage('single'); selectUser(user)"
+												mdbBtn 
+												mdbWavesEffect>
+											<i class="fa fa-edit"></i> Editar
+										</button>
+										<button class="btn btn-danger btn-sm card-link" 
+												(click)=" callDelete(user); basicModal.show()"
+												mdbBtn 
+												mdbWavesEffect>
+											<i class="fa fa-trash"></i> Deletar
+										</button>							
+									</div>		        		
+								</div>
+							</mdb-card-text>
+						</mdb-card-body>
+					</mdb-card>
+				</div>
+			</div><br>	
+		</div>
+	</div>	
+</section>
+
+<section *ngIf="page == 'single'">
+	<div class="container-fluid">
+		<div class="row justify-content-center">
+			<div class="col-md-10 text-center">
+				<h1 class="text-center">Usuários</h1>
+			</div>
+		</div><br>
+	
+		<div class="row justify-content-center">	
+			<div class="col-md-10">
+				<mdb-card>
+					<mdb-card-body>
+						<form [formGroup]="form">
+							<input type="hidden" id="id" [formControl]="id" />
+							<div class="row">
+								<div class="col-md-6">
+									<div class="md-form">
+										<input mdbInputDirective 
+											   type="text" 
+											   id="name" 
+											   class="form-control" 
+											   [class.invalid]="name.invalid && name.touched"
+											   [mdbValidate]="false"
+											   [formControl]="name" />
+										<label for="name">Nome</label>
+									</div>
+									<div *ngIf="name.invalid && name.touched">
+										<div class="validation-msg">
+											<div *ngIf="name.errors.required">
+												Este campo é obrigatório
+											</div>
+											<div *ngIf="name.errors.minlength">
+												Este campo deve ter no minimo 3 caracteres
+											</div>										
+										</div>
+									</div>								
+								</div>
+                            </div><br>
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="md-form">
+                                        <input type="email"
+                                               class="form-control"                                               
+                                               mdbInputDirective 
+											   id="email" 
+											   [class.invalid]="email.invalid && email.touched"
+											   [mdbValidate]="false"
+											   [formControl]="email" />
+                                        <label for="email">E-mail</label>
+                                        <div *ngIf="email.invalid && email.touched">
+                                            <div class="validation-msg">
+                                                <div *ngIf="email.errors.required">
+                                                    Este campo é obrigatório
+                                                </div>
+                                                <div *ngIf="email.errors.email">
+                                                    Digite um e-mail válido
+                                                </div>                                                
+                                                <div *ngIf="email.errors.minlength">
+                                                    Este campo deve ter no minimo 10 caracteres
+                                                </div>										
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><br>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="md-form">
+                                        <input type="password"
+                                                class="form-control"                                               
+                                                mdbInputDirective 
+                                                id="password" 
+                                                [class.invalid]="password.invalid && password.touched"
+                                                [mdbValidate]="false"
+                                                [formControl]="password" />
+                                        <label for="password">Password</label>
+                                        <div *ngIf="password.invalid && password.touched">
+                                            <div class="validation-msg">
+                                                <div *ngIf="password.errors.required">
+                                                    Este campo é obrigatório
+                                                </div>
+                                                <div *ngIf="password.errors.minlength">
+                                                    Este campo deve ter no minimo 6 caracteres
+                                                </div>										
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><br>                            
+
+
+							
+							<div class="row">
+								<div class="col-md-3">
+									<div class="custom-control custom-radio">
+										<input type="radio" 
+												class="custom-control-input"
+												id="isactive"
+												[formControl]="active"
+												name="isActive"
+												[checked]="isActive"
+												[mdbValidate]="false"                                           
+												value="true"
+												mdbInputDirective>
+										<label class="custom-control-label" 
+												for="isactive">
+											Ativo
+										</label>										
+									</div>
+								</div>
+
+								<div class="col-md-3">
+									<div class="custom-control custom-radio">
+										<input type="radio" 
+												class="custom-control-input"
+												id="isNotActive"
+												name="isActive"       
+												[formControl]="active"
+												[checked]="!isActive"
+												[mdbValidate]="false"
+												value="false"
+												mdbInputDirective>
+										<label class="custom-control-label" 
+												for="isNotActive">
+											Inativo
+										</label>
+									</div>                                
+								</div>
+							</div>
+	
+							<div class="row justify-content-right">
+								<div class="col-md-12 text-right">
+									<button class="btn btn-danger btn-sm"
+											(click)="changePage('list')"
+											mdbBtn
+											mdbWavesEffect>
+										<i class="fa fa-arrow-left"></i> Voltar
+									</button>			    			
+	
+									<button class="btn btn-success btn-sm" 
+											[disabled]="form.invalid"
+											mdbBtn
+											mdbWavesEffect
+												(click)="confirmForm()">
+										<i class="fa fa-check"></i> Confirmar
+									</button>
+								</div>			    		
+							</div>						
+						</form>
+					</mdb-card-body>
+				</mdb-card>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    	<div class="modal-content">
+      		<div class="modal-header">
+        		<button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+          			<span aria-hidden="true">×</span>
+        		</button>
+        		<h4 class="modal-title w-100" id="myModalLabel">Exclusão de Usuário</h4>
+      		</div>
+      		<div class="modal-body">
+        		Tem certeza de que deseja excluir este usuario?
+      		</div>
+      		<div class="modal-footer">
+        		<button type="button" 
+        				mdbBtn 
+        				color="danger"
+        				class="waves-light btn-sm"
+        				aria-label="Close"
+        				(click)="basicModal.hide()"
+        				mdbWavesEffect>
+        			<i class="fa fa-remove"></i> Fechar
+        		</button>
+        		<button type="button" 
+        				mdbBtn 
+        				mdbWavesEffect
+                        color="success" 
+        				class="relative waves-light btn-sm" 
+        				(click)="confirmDelete(); basicModal.hide()">
+        			<i class="fa fa-check"></i> Confirmar
+        		</button>
+      		</div>
+    	</div>
+  	</div>
+</div>

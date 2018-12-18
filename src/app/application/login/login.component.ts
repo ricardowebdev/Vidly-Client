@@ -82,8 +82,11 @@ export class LoginComponent implements OnInit {
     }
 
     loadUsers() {
-        this.users = this.service.listUsers();
-        this.filteredUsers = this.users;
+        this.service.getAllUsers().subscribe(response => {
+            this.filteredUsers = this.users;
+        }, error => {
+            console.log(error);
+        });
     }
 
     changePage(page) {
@@ -101,53 +104,7 @@ export class LoginComponent implements OnInit {
         this.oldPassword.setValue(user.password);
     }
 
-    confirmDelete() {
-        const result = this.service.removeUser(this.users, this.form.value);
-
-        if (typeof(result) === 'string') {
-            this.base.setAlert(result, 'danger');
-        } else {
-            window.scrollTo(0, 0);
-            this.base.setAlert('Usuario removido com sucesso', 'success');
-            this.users = result;
-        }
-    }
-
     confirmForm() {
-        if (this.id.value !== null && this.id.value > 0) {
-            const result = this.service.editUser(this.users, this.form.value);
-
-            if (typeof(result) === 'string') {
-               this.base.setAlert(result, 'danger');
-            } else {
-                this.users = result;
-                this.base.setAlert('Usuário Alterado com sucesso', 'success');
-                this.changePage('list');
-            }
-        } else {
-            /*
-            *
-            * Validando a senha no caso de inserção
-            * A senha foi feita desse jeito por motivos de uma integração
-            * com o backend pode pedir que a senha seja transformada em hash
-            *
-            */
-            if (this.password.value === '' || this.password.value === null) {
-                this.base.setAlert('Para cadastrar um novo usuario uma senha é necessaria', 'danger');
-                document.getElementById('password').focus();
-                return false;
-            }
-
-            const result = this.service.saveUser(this.users, this.form.value);
-
-            if (typeof(result) === 'string') {
-                this.base.setAlert(result, 'danger');
-            } else {
-                this.users = result;
-                this.changePage('list');
-                this.base.setAlert('Usuário inserido com sucesso', 'success');
-            }
-        }
     }
 
     findUser(userName) {
