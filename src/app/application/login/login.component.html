@@ -1,7 +1,7 @@
 <app-alert [message]="base.alertMsg"
            [type]="base.alertType"
-           (close)="base.closeAlert()"></app-alert>
-
+		   (close)="base.closeAlert()"></app-alert><br>
+		   
 <div class="container-fluid">
 	<div class="row justify-content-md-center loginCard">
 		<h1 class="text-center"><b>Vidly Locadora</b></h1>
@@ -23,7 +23,9 @@
 						        		<input type="text" 
 						        			   id="email" 
 						        			   class="form-control"
-						        			   [formControl]="email"						        			   
+											   [formControl]="email"						        			   
+											   [class.invalid]="email.invalid && email.touched"
+											   [mdbValidate]="false"											   
 						        			   mdbInputDirective />
 						        		<label for="email">E-mail <span class="star-required">*</span></label>
 									</div>
@@ -49,7 +51,9 @@
 						        		<input type="password" 
 						        		       class="form-control"
 						        		       id="password"
-						        		       [formControl]="password"
+											   [formControl]="password"
+											   [class.invalid]="password.invalid && password.touched"
+											   [mdbValidate]="false"
 						        		       mdbInputDirective />
 						        		<label for="password">Senha <span class="star-required">*</span></label>
 									</div>
@@ -69,7 +73,9 @@
 				        	<div class="row justify-content-md-center">
 				        		<div class="col-md-10">
 				        			<button mdbBtn 
-				        					mdbWavesEffect
+											mdbWavesEffect
+											[disabled]="form.invalid"
+											(click)="confirmForm()"
 				        					class="btn btn-primary form-control">
 				        				<i class="fa fa-sign-in"></i> Entrar
 				        			</button>

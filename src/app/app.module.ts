@@ -18,6 +18,7 @@ import { MoviesComponent            } from './application/movies/movies.componen
 import { GenresComponent            } from './application/genres/genres.component';
 import { LoginComponent             } from './application/login/login.component';
 import { UserComponent              } from './application/user/user.component';
+import { HeaderComponent } from './application/header/header.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { UserComponent              } from './application/user/user.component';
     MoviesComponent,
     GenresComponent,
     LoginComponent,
-    UserComponent
+    UserComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

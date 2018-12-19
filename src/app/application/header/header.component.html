@@ -1,0 +1,50 @@
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo scrolling-navbar text-left">
+	<mdb-navbar-brand><a class="navbar-brand" href="#">Vidly - Locadora</a></mdb-navbar-brand>
+	<links>
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item"
+				[routerLinkActive]="'active'">
+				<a class="nav-link waves-light" 
+				   [routerLink]="['/movies']" 
+				   mdbWavesEffect>
+				   Filmes
+				</a>
+			</li>
+			
+			<!-- <li class="nav-item"
+				[routerLinkActive]="'active'">
+				<a class="nav-link waves-light"
+				   [routerLink]="['/clients']"
+				   mdbWavesEffect>
+				   Clientes
+				</a>
+			</li> -->
+
+			<li class="nav-item" 
+			    [routerLinkActive]="'active'">
+				<a class="nav-link waves-light"
+				   [routerLink]="['/genres']"
+				   mdbWavesEffect>
+				   Gêneros
+				</a>
+			</li>
+
+			<li class="nav-item"
+			    [routerLinkActive]="'active'">
+				<a class="nav-link waves-light"
+				   [routerLink]="['/users']"
+				   mdbWavesEffect>
+				   Usuários
+				</a>
+			</li>
+		</ul>
+		<span class="navbar-text white-text text-right">
+			<button class="btn btn-danger btn-sm"
+					  mdbBtn 
+					  mdbWavesEffect
+					  (click)="logout()">
+				<i class="fa fa-sign-out"></i> Sair
+			</button>
+		</span>        
+	</links>
+</mdb-navbar>   
