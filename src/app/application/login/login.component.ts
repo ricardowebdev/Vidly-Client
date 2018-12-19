@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
 
     form = new FormGroup({
         password: new FormControl('', [
+            Validators.required,
             Validators.minLength(5),
             Validators.maxLength(50),
         ]),
@@ -57,7 +58,18 @@ export class LoginComponent implements OnInit {
                 this.base.setAlert(authenticate, 'warning');
             }
         }, error => {
-            this.base.setAlert(error, 'warning');
+            if (error.status === 401) {
+                this.base.setAlert('Usuario e ou senha inválidos', 'warning');
+            } else if (error.status === 404) {
+                this.base.setAlert('Servidor indisponível tente novamente mais tarde', 'warning');
+            } else {
+                this.base.setAlert(error, 'danger');
+            }
+
         });
+    }
+
+    clear() {
+        this.base.closeAlert();
     }
 }

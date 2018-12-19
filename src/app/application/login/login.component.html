@@ -25,12 +25,13 @@
 						        			   class="form-control"
 											   [formControl]="email"						        			   
 											   [class.invalid]="email.invalid && email.touched"
-											   [mdbValidate]="false"											   
+											   [mdbValidate]="false"
+											   (keyup)="clear()"											   
 						        			   mdbInputDirective />
 						        		<label for="email">E-mail <span class="star-required">*</span></label>
-									</div>
+									</div>			
 									<div *ngIf="email.invalid && email.touched">
-										<div class="alert alert-danger">
+										<div class="validation-msg">
 											<div *ngIf="email.errors.required">
 												Este campo é obrigatório
 											</div>
@@ -54,11 +55,12 @@
 											   [formControl]="password"
 											   [class.invalid]="password.invalid && password.touched"
 											   [mdbValidate]="false"
+											   (keyup)="clear()"
 						        		       mdbInputDirective />
 						        		<label for="password">Senha <span class="star-required">*</span></label>
 									</div>
 									<div *ngIf="password.invalid && password.touched">
-										<div class="alert alert-danger">
+										<div class="validation-msg">
 											<div *ngIf="password.errors.required">
 												Este campo é obrigatório
 											</div>
@@ -66,7 +68,7 @@
 												Este campo deve ter no minimo 5 caracteres
 											</div>										
 										</div>
-									</div>									
+									</div>								
 		                        </div>                        
 				        	</div><br>
 
